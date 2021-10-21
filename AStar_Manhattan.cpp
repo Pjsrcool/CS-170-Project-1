@@ -1,6 +1,6 @@
 #include "header.h"
 
-int main() {
+Node AStar_Manhattan() {
 
-    return 0;
 }
+
