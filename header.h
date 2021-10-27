@@ -7,7 +7,7 @@
 #include <vector>
 
 using std::vector;
-using std::queue;
+using std::priority_queue;
 
 struct Node {
     vector<vector<int>> state;  // current state of the board
@@ -16,6 +16,9 @@ struct Node {
                                 //  1 --> sergeant who wishes to be in front
                                 // any positive int --> block accupied by random man
     Node* parent;      // pointer to parent node
+
+    long cost; // current weight of the node
+
     // vector<Node*> children;    // vector of pointers to children nodes
 
     // Node(vector<vector<int>> s, Node* p) : state(s), parent(p) {}; // Contructor that immediately assigns values to states, and assigns parent
