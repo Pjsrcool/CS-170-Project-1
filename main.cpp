@@ -1,5 +1,12 @@
 #include "header.h"
 
+vector<Node> createChildren (const Node n) {
+    
+}
+
+
+
+
 // int main(int argc, char** argv) {
 int main () {
     vector<vector<int>> temp;

@@ -16,10 +16,10 @@ struct Node {
                                 //  1 --> sergeant who wishes to be in front
                                 // any positive int --> block accupied by random man
     Node* parent;      // pointer to parent node
-    vector<Node*> children;    // vector of pointers to children nodes
+    // vector<Node*> children;    // vector of pointers to children nodes
 
-    Node(vector<vector<int>> s, Node* p) : state(s), parent(p) {}; // Contructor that immediately assigns values to states, and assigns parent
-    void AddChild (Node* n) {children.push_back(n);}    // makes adding children look cleaner
+    // Node(vector<vector<int>> s, Node* p) : state(s), parent(p) {}; // Contructor that immediately assigns values to states, and assigns parent
+    // void AddChild (Node* n) {children.push_back(n);}    // makes adding children look cleaner
     void print() {
         for (auto i : state) {
             for (auto j : i)
@@ -30,8 +30,8 @@ struct Node {
 
 };
 
-Node UniformCostSearch();
-Node AStar_MisplacedTile();
-Node AStar_Manhattan();
+Node UniformCostSearch(Node initState);
+Node AStar_MisplacedTile(Node initState);
+Node AStar_Manhattan(Node initState);
 
 #endif /*HEADER_H*/
