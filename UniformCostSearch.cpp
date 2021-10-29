@@ -9,9 +9,14 @@ class SmallerCost {
 
 Node UniformCostSearch(Node initState) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
+    Node answer;
 
     nodes.push(initState);
     while (!nodes.empty()) {
-
+        if (isGoalState(nodes.top())) {
+            answer.setState(nodes.top().state);
+            return answer;
+        }
+        // expand node
     }
 }

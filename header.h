@@ -20,7 +20,9 @@ struct Node {
     long cost; // current weight of the node
 
     // vector<Node*> children;    // vector of pointers to children nodes
-
+    
+    void setState(vector<vector<int>> s) {state = s }; // initializes a node to a specific state
+    
     // Node(vector<vector<int>> s, Node* p) : state(s), parent(p) {}; // Contructor that immediately assigns values to states, and assigns parent
     // void AddChild (Node* n) {children.push_back(n);}    // makes adding children look cleaner
     void print() {
@@ -33,6 +35,12 @@ struct Node {
 
 };
 
+bool isGoalState(Node n) {
+    for (int i = 0; i < 9; ++i)
+        if (n.state[1][i] != i + 1)
+            return false;
+    return true;
+}
 Node UniformCostSearch(Node initState);
 Node AStar_MisplacedTile(Node initState);
 Node AStar_Manhattan(Node initState);
