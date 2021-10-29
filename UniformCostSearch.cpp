@@ -12,6 +12,9 @@ Node UniformCostSearch(Node initState) {
     Node answer;
 
     nodes.push(initState);
+
+    answer.setState(nodes.top().state);
+    return answer;
     while (!nodes.empty()) {
         if (isGoalState(nodes.top())) {
             answer.setState(nodes.top().state);
@@ -19,4 +22,5 @@ Node UniformCostSearch(Node initState) {
         }
         // expand node
     }
+    return answer;
 }
