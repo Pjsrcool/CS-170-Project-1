@@ -1,5 +1,5 @@
 build: 
-	g++ main.cpp UniformCostSearch.cpp -o solve
+	g++ main.cpp UniformCostSearch.cpp AStar_Manhattan.cpp -o solve
 
 run: 
 	./solve

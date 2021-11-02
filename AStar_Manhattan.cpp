@@ -1,19 +1,6 @@
 #include "header.h"
 
-class SmallerCost {
-    public:
-    bool operator() (Node l, Node r) {
-        return l.cost >= r.cost;
-    }
-};
-
-bool isGoalState(Node n) {
-    if (n.state == "1230000")
-        return true;
-    return false;
-}
-
-void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children) {
+void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children) {
     vector<int> openRecess;
     vector<int> openState;
     
@@ -73,7 +60,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
         }
         
         // move up
-        if (node.recess[openState[i]] != '_' && node.recess[openState[i]] != '0' ) {
+        if (node.recess[openState[i]] != '-' && node.recess[openState[i]] != '0' ) {
             Node temp;
             temp.recess = node.recess;
             temp.state = node.state;
@@ -87,7 +74,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
     }
 }
 
-Node AStar_Manhattan() {
+Node AStar_Manhattan(Node initState) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
     Node answer;
 
@@ -116,7 +103,7 @@ Node AStar_Manhattan() {
         }
 
         // expand node, then remove the old node
-        ExpandNode(nodes.top(), nodes);
+        ExpandNode2(nodes.top(), nodes);
         nodes.pop();
     }
 
