@@ -7,8 +7,17 @@ bool isGoalState(Node n) {
     return false;
 }
 
+long heuristic (SearchType S) {
+    if (S == UniformCost) {
+        return 0;
+    }
+
+    else
+        return -1;
+}
+
 // expands a node and puts them into the queue
-void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children) {
+void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType S) {
     vector<int> openRecess;
     vector<int> openState;
     
@@ -30,7 +39,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             Node temp;
             temp.recess = node.recess;
             temp.state = node.state;
-            temp.cost = node.cost + 1;
+            temp.cost = node.cost + 1 + heuristic(S);
             temp.recess[openRecess[i]] = node.state[openRecess[i]];
             temp.state[openRecess[i]] = '0';
             temp.setParent(node.recess + node.state);
@@ -46,7 +55,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             Node temp;
             temp.recess = node.recess;
             temp.state = node.state;
-            temp.cost = node.cost + 1;
+            temp.cost = node.cost + 1 + heuristic(S);
             temp.state[openState[i]] = node.state[openState[i] - 1];
             temp.state[openState[i] - 1] = '0';
             temp.setParent(node.recess + node.state);
@@ -59,7 +68,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             Node temp;
             temp.recess = node.recess;
             temp.state = node.state;
-            temp.cost = node.cost + 1;
+            temp.cost = node.cost + 1 + heuristic(S);
             temp.state[openState[i]] = node.state[openState[i] + 1];
             temp.state[openState[i] + 1] = '0';
             temp.setParent(node.recess + node.state);
@@ -72,7 +81,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             Node temp;
             temp.recess = node.recess;
             temp.state = node.state;
-            temp.cost = node.cost + 1;
+            temp.cost = node.cost + 1 + heuristic(S);
             temp.recess[openState[i]] = '0';
             temp.state[openState[i]] = node.recess[openState[i]];
             temp.setParent(node.recess + node.state);
@@ -82,7 +91,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
     }
 }
 
-Node Search(Node initState, SearchType S) {
+Node Search(Node initState, SearchType search) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
     Node answer;
 
@@ -109,7 +118,7 @@ Node Search(Node initState, SearchType S) {
         }
         // node was not a goal state. so we
         // expand node, then remove it
-        ExpandNode(nodes.top(), nodes);
+        ExpandNode(nodes.top(), nodes, search);
         nodes.pop();
     }
 
