@@ -24,22 +24,30 @@ enum SearchType {
 
 // how we will represent the node
 struct Node {
-    string parent; // config of parent node
-    string recess;  // recesses
-                    // _ - blocked
-                    // 0 - space
-    string state;   // men in the trench
+    // config of parent node, prevents searching backwards
+    string parent; 
 
-    long cost; // current weight of the nod
+    // recesses in the trench
+    // "-" --> blocked
+    // "0" --> space
+    string recess;  
     
-    // sets the parent 
+    // men in the main portion of the trench
+    string state;   
+
+    // current depth of the node
+    long cost; 
+    
+    // sets the parent configuration
     void setParent(string p) {parent = p;}
 
-    // sets current recess and state
+    // sets the recess and state configuration
     void setState(string r, string s) {recess = r; state = s;}
 
-    void setCost(long c) {cost = c;} // sets the cost of the node
+    // sets the depth of the node
+    void setCost(long c) {cost = c;}
 
+    // prints the state of the node and its current depth
     void print() {
         cout << recess << endl;
         cout << state << " -->COST: " << cost << endl;
@@ -54,6 +62,7 @@ class SmallerCost {
     }
 };
 
+// the generic search function
 Node Search(Node initState, SearchType S);
 
 #endif /*HEADER_H*/
