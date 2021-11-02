@@ -11,8 +11,7 @@ int main () {
     InitialState.setCost(0);
     
     Node answer;
-    answer = UniformCostSearch(InitialState);
-    answer = AStar_Manhattan(InitialState);
+    answer = Search(InitialState, UniformCost);
 
     cout << endl << "---FINAL ANSWER---" << endl;
     answer.print();

@@ -1,6 +1,14 @@
 #include "header.h"
 
-void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children) {
+// check if the node is a goal state
+bool isGoalState(Node n) {
+    if (n.state == "1230000")
+        return true;
+    return false;
+}
+
+// expands a node and puts them into the queue
+void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children) {
     vector<int> openRecess;
     vector<int> openState;
     
@@ -25,7 +33,7 @@ void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost
             temp.cost = node.cost + 1;
             temp.recess[openRecess[i]] = node.state[openRecess[i]];
             temp.state[openRecess[i]] = '0';
-            temp.parent = node.recess + node.state;
+            temp.setParent(node.recess + node.state);
             if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
@@ -41,7 +49,7 @@ void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost
             temp.cost = node.cost + 1;
             temp.state[openState[i]] = node.state[openState[i] - 1];
             temp.state[openState[i] - 1] = '0';
-            temp.parent = node.recess + node.state;
+            temp.setParent(node.recess + node.state);
             if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
@@ -54,7 +62,7 @@ void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost
             temp.cost = node.cost + 1;
             temp.state[openState[i]] = node.state[openState[i] + 1];
             temp.state[openState[i] + 1] = '0';
-            temp.parent = node.recess + node.state;
+            temp.setParent(node.recess + node.state);
             if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
@@ -67,46 +75,43 @@ void ExpandNode2(const Node node, priority_queue<Node, vector<Node>, SmallerCost
             temp.cost = node.cost + 1;
             temp.recess[openState[i]] = '0';
             temp.state[openState[i]] = node.recess[openState[i]];
-            temp.parent = node.recess + node.state;
+            temp.setParent(node.recess + node.state);
             if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
     }
 }
 
-Node AStar_Manhattan(Node initState) {
+Node Search(Node initState, SearchType S) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
     Node answer;
 
+    // initialize the queue
     nodes.push(initState);
-    answer.setState(nodes.top().recess, nodes.top().state);
-    answer.setCost(nodes.top().cost);
-    // ExpandNode(nodes.top(), nodes);
-    // // while (!nodes.empty())  {
-    // for (int a = 0; a < 4; ++a) {
-    //     Node temp = nodes.top();
-    //     temp.print();
-    //     cout << endl;
 
-    //     ExpandNode(nodes.top(), nodes);
-    //     nodes.pop();
-    // }
+    // initialize answer to all blanks
+    // we return all blanks if no goal
+    // state is found
+    answer.setState(" ", " ");
+    answer.setCost(-1);
 
     while (!nodes.empty()) {
+        // we grab and print the top node
         Node temp = nodes.top();
         temp.print();
         
+        // check if it is the goal state
+        // if it is, then return it
         if (isGoalState(nodes.top())) {
             answer.setState(nodes.top().recess, nodes.top().state);
             answer.setCost(nodes.top().cost);
             return answer;
         }
-
-        // expand node, then remove the old node
-        ExpandNode2(nodes.top(), nodes);
+        // node was not a goal state. so we
+        // expand node, then remove it
+        ExpandNode(nodes.top(), nodes);
         nodes.pop();
     }
 
     return answer;
 }
-

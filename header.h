@@ -15,6 +15,13 @@ using std::string;
 using std::cout;
 using std::endl;
 
+// we use an enum to decide which type of search to perform
+enum SearchType {
+    UniformCost,
+    A_Star_MisplacedTile,
+    A_Star_Manhattan,
+};
+
 // how we will represent the node
 struct Node {
     string parent; // config of parent node
@@ -37,15 +44,7 @@ struct Node {
         cout << recess << endl;
         cout << state << " -->COST: " << cost << endl;
     }
-
 };
-
-// check if the node is a goal state
-static bool isGoalState(Node n) {
-    if (n.state == "1230000")
-        return true;
-    return false;
-}
 
 // used to order the Node that enter the queue
 class SmallerCost {
@@ -55,8 +54,6 @@ class SmallerCost {
     }
 };
 
-Node UniformCostSearch(Node initState);
-Node AStar_MisplacedTile(Node initState);
-Node AStar_Manhattan(Node initState);
+Node Search(Node initState, SearchType S);
 
 #endif /*HEADER_H*/
