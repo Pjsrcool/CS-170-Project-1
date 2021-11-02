@@ -5,42 +5,35 @@
 #include <iomanip>
 #include <queue>
 #include <vector>
+#include <unordered_set>
+#include <string>
 
 using std::vector;
 using std::priority_queue;
+using std::unordered_set;
+using std::string;
+using std::cout;
+using std::endl;
 
 struct Node {
-    vector<vector<int>> state;  // current state of the board
-                                // -1 --> block that no man can travel to
-                                //  0 --> empty block that someone can travel to
-                                //  1 --> sergeant who wishes to be in front
-                                // any positive int --> block accupied by random man
-    Node* parent;      // pointer to parent node
+    string parent; // config of parent node
+    string recess;  // recesses
+                    // _ - blocked
+                    // 0 - space
+    string state;   // men in the trench
 
-    long cost; // current weight of the node
+    long cost; // current weight of the nod
+    
+    void setState(string r, string s) {recess = r; state = s;}
 
-    // vector<Node*> children;    // vector of pointers to children nodes
-    
-    void setState(vector<vector<int>> s) {state = s;} // initializes a node to a specific state
-    
-    // Node(vector<vector<int>> s, Node* p) : state(s), parent(p) {}; // Contructor that immediately assigns values to states, and assigns parent
-    // void AddChild (Node* n) {children.push_back(n);}    // makes adding children look cleaner
+    void setCost(long c) {cost = c;} // sets the cost of the node
+
     void print() {
-        for (auto i : state) {
-            for (auto j : i)
-                std::cout << std::setw(3) << j << " ";
-            std::cout << std::endl;
-        }
+        cout << recess << endl;
+        cout << state << " " << cost << endl;
     }
 
 };
-
-static bool isGoalState(Node n) {
-    for (int i = 0; i < 9; ++i)
-        if (n.state[1][i] != i + 1)
-            return false;
-    return true;
-}
 
 Node UniformCostSearch(Node initState);
 Node AStar_MisplacedTile(Node initState);

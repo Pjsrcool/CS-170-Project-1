@@ -2,17 +2,19 @@
 
 // int main(int argc, char** argv) {
 int main () {
-    vector<vector<int>> puzzle;
-    puzzle.push_back({-1,-1,-1,0,-1,0,-1, 0,-1, -1});
-    puzzle.push_back({0,2,3,4,5,6,7,8,9,1});
     Node InitialState;
-    InitialState.setState(puzzle);
-    // Node* init = new Node(temp, nullptr);
-    // init->print();
-
+    InitialState.recess = "__0_0__";
+    // InitialState.state = "0123000";
+    InitialState.state = "0203010";
+    // InitialState.state = "0003000";
+    InitialState.parent = " ";
+    InitialState.setCost(0);
+    
     Node answer = UniformCostSearch(InitialState);
+    // cout<<isGoalState(InitialState) << endl;
+    // InitialState.print();
     answer.print();
 
-    std::cout << "hello world\n\n";
+    cout << "done\n\n";
     return 0;
 }
