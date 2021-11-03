@@ -37,8 +37,11 @@ struct Node {
     string state;   
 
     // current depth of the node
-    long cost; 
+    long depth; 
     
+    // depth + heuristic
+    long cost;
+
     // sets the parent configuration
     void setParent(string p) {parent = p;}
 
@@ -46,12 +49,15 @@ struct Node {
     void setState(string r, string s) {recess = r; state = s;}
 
     // sets the depth of the node
+    void setDepth(long d) {depth = d;}
+
+    // sets the depth of the node
     void setCost(long c) {cost = c;}
 
     // prints the state of the node and its current depth
     void print() {
         cout << recess << endl;
-        cout << state << " -->COST: " << cost << endl;
+        cout << state << " -->COST: " << cost << " -->Depth: " << depth << endl;
     }
 };
 
@@ -59,7 +65,7 @@ struct Node {
 class SmallerCost {
     public:
     bool operator() (Node l, Node r) {
-        return l.cost >= r.cost;
+        return l.cost > r.cost;
     }
 };
 

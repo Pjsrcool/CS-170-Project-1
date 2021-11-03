@@ -9,6 +9,7 @@ int main () {
     // InitialState.state = "0003000";
     InitialState.setParent(" ");
     InitialState.setCost(0);
+    InitialState.setDepth(0);
     
     Node answer;
     int preferedSearch = -1;
