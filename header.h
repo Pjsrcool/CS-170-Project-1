@@ -5,12 +5,10 @@
 #include <iomanip>
 #include <queue>
 #include <vector>
-#include <unordered_set>
 #include <string>
 
 using std::vector;
 using std::priority_queue;
-using std::unordered_set;
 using std::string;
 using std::cout;
 using std::cin;
@@ -70,6 +68,6 @@ class SmallerCost {
 };
 
 // the generic search function
-Node Search(Node initState, SearchType S);
+Node Search(Node initState, SearchType S, const string& goal);
 
 #endif /*HEADER_H*/

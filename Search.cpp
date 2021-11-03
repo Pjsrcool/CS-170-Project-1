@@ -1,8 +1,8 @@
 #include "header.h"
 
 // check if the node is a goal state
-bool isGoalState(Node n) {
-    if (n.state == "1230000")
+bool isGoalState(Node n, const string & goal) {
+    if (n.state.compare(goal) == 0)
         return true;
     return false;
 }
@@ -39,6 +39,7 @@ long heuristic (SearchType S, const Node& node) {
                 return long(node.state.find("1"));
             break;
     }
+    return 0;
 }
 
 // expands a node and puts them into the queue
@@ -129,7 +130,7 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
     }
 }
 
-Node Search(Node initState, SearchType search) {
+Node Search(Node initState, SearchType search, const string& goal) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
     Node answer;
 
@@ -149,7 +150,7 @@ Node Search(Node initState, SearchType search) {
         
         // check if it is the goal state
         // if it is, then return it
-        if (isGoalState(nodes.top())) {
+        if (isGoalState(nodes.top(), goal)) {
             answer.setState(nodes.top().recess, nodes.top().state);
             answer.setDepth(nodes.top().depth);
             answer.setCost(nodes.top().cost);

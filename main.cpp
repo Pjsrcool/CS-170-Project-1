@@ -3,12 +3,19 @@
 // int main(int argc, char** argv) {
 int main () {
     Node InitialState;
+    string goal;
 
     // InitialState.recess = "--0-0--";
-    // InitialState.state = "0123000";
+    // InitialState.state  = "0123000";
+    // goal = "1230000";
 
-    InitialState.recess = "--1-2--";
-    InitialState.state = "0003000";
+    // InitialState.recess = "--1-2--";
+    // InitialState.state  = "0003000";
+    // goal = "1230000";
+
+    InitialState.recess = "---0-0-0--";
+    InitialState.state  = "0234567891";
+    goal = "1234567890";
 
     InitialState.setParent(" ");
     InitialState.setCost(0);
@@ -30,13 +37,13 @@ int main () {
 
     switch (preferedSearch) {
         case UniformCost :
-            answer = Search(InitialState, UniformCost); 
+            answer = Search(InitialState, UniformCost, goal); 
             break;
         case A_Star_MisplacedTile : 
-            answer = Search(InitialState, A_Star_MisplacedTile); 
+            answer = Search(InitialState, A_Star_MisplacedTile, goal); 
             break;
         case A_Star_Manhattan :
-            answer = Search(InitialState, A_Star_Manhattan);
+            answer = Search(InitialState, A_Star_Manhattan, goal);
             break;
     }
     
