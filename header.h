@@ -6,9 +6,11 @@
 #include <queue>
 #include <vector>
 #include <string>
+#include <unordered_set>
 
 using std::vector;
 using std::priority_queue;
+using std::unordered_set;
 using std::string;
 using std::cout;
 using std::cin;

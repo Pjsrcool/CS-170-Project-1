@@ -1,5 +1,7 @@
 #include "header.h"
 
+unordered_set<string> history;
+
 // check if the node is a goal state
 bool isGoalState(Node n, const string & goal) {
     if (n.state.compare(goal) == 0)
@@ -73,7 +75,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
 
             temp.setCost(temp.depth + heuristic(S, temp));
             temp.setParent(node.recess + node.state);
-            if (node.parent != temp.recess + temp.state)
+            if  (history.insert(temp.recess + temp.state).second)
+            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
     }
@@ -92,7 +95,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
 
             temp.setCost(temp.depth + heuristic(S, temp));
             temp.setParent(node.recess + node.state);
-            if (node.parent != temp.recess + temp.state)
+            if  (history.insert(temp.recess + temp.state).second)
+            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
         
@@ -108,7 +112,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
 
             temp.setCost(temp.depth + heuristic(S, temp));
             temp.setParent(node.recess + node.state);
-            if (node.parent != temp.recess + temp.state)
+            if  (history.insert(temp.recess + temp.state).second)
+            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
         
@@ -124,7 +129,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
 
             temp.setCost(temp.depth + heuristic(S, temp));
             temp.setParent(node.recess + node.state);
-            if (node.parent != temp.recess + temp.state)
+            if  (history.insert(temp.recess + temp.state).second)
+            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
     }
