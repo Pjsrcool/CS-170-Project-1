@@ -13,6 +13,7 @@ using std::priority_queue;
 using std::unordered_set;
 using std::string;
 using std::cout;
+using std::cin;
 using std::endl;
 
 // we use an enum to decide which type of search to perform

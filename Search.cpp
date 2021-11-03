@@ -8,12 +8,16 @@ bool isGoalState(Node n) {
 }
 
 long heuristic (SearchType S) {
-    if (S == UniformCost) {
-        return 0;
+    switch(S) {
+        case UniformCost: 
+            return 0; break;
+        case A_Star_MisplacedTile:
+            break;
+        case A_Star_Manhattan:
+            break;
+        default:
+            return 0; //default is UniformCost;
     }
-
-    else
-        return -1;
 }
 
 // expands a node and puts them into the queue
