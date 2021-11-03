@@ -74,9 +74,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             temp.state[openRecess[i]] = '0';
 
             temp.setCost(temp.depth + heuristic(S, temp));
-            temp.setParent(node.recess + node.state);
+            
             if  (history.insert(temp.recess + temp.state).second)
-            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
     }
@@ -94,9 +93,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             temp.state[openState[i] - 1] = '0';
 
             temp.setCost(temp.depth + heuristic(S, temp));
-            temp.setParent(node.recess + node.state);
+            
             if  (history.insert(temp.recess + temp.state).second)
-            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
         
@@ -111,9 +109,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             temp.state[openState[i] + 1] = '0';
 
             temp.setCost(temp.depth + heuristic(S, temp));
-            temp.setParent(node.recess + node.state);
+            
             if  (history.insert(temp.recess + temp.state).second)
-            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
         
@@ -128,9 +125,8 @@ void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost>
             temp.recess[openState[i]] = '0';
 
             temp.setCost(temp.depth + heuristic(S, temp));
-            temp.setParent(node.recess + node.state);
+
             if  (history.insert(temp.recess + temp.state).second)
-            // if (node.parent != temp.recess + temp.state)
                 children.push(temp);
         }
     }

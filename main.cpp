@@ -17,7 +17,6 @@ int main () {
     InitialState.state  = "0234567891";
     goal = "1234567890";
 
-    InitialState.setParent(" ");
     InitialState.setCost(0);
     InitialState.setDepth(0);
     

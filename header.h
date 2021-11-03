@@ -25,9 +25,6 @@ enum SearchType {
 
 // how we will represent the node
 struct Node {
-    // config of parent node, prevents searching backwards
-    string parent; 
-
     // recesses in the trench
     // "-" --> blocked
     // "0" --> space
@@ -41,9 +38,6 @@ struct Node {
     
     // depth + heuristic
     long cost;
-
-    // sets the parent configuration
-    void setParent(string p) {parent = p;}
 
     // sets the recess and state configuration
     void setState(string r, string s) {recess = r; state = s;}
