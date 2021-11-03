@@ -3,10 +3,13 @@
 // int main(int argc, char** argv) {
 int main () {
     Node InitialState;
-    InitialState.recess = "--0-0--";
+
+    // InitialState.recess = "--0-0--";
     // InitialState.state = "0123000";
-    InitialState.state = "0123000";
-    // InitialState.state = "0003000";
+
+    InitialState.recess = "--1-2--";
+    InitialState.state = "0003000";
+
     InitialState.setParent(" ");
     InitialState.setCost(0);
     InitialState.setDepth(0);

@@ -7,21 +7,36 @@ bool isGoalState(Node n) {
     return false;
 }
 
-long heuristic (SearchType S, const Node& n) {
+long heuristic (SearchType S, const Node& node) {
     switch(S) {
         case UniformCost: 
             return 0; 
             break;
         case A_Star_MisplacedTile:
+            // vector<int> openRecess;
+            // vector<int> openState;
+    
+            // // find the open spaces in recesses and the main path
+            // for (int i = 0; i < node.recess.length(); ++i) {
+            //     if (node.recess[i] == '0')
+            //         openRecess.push_back(i);
+            // }
+            // for (int i = 0; i < node.state.length(); ++i) {
+            //     if (node.state[i] == '0')
+            //         openState.push_back(i);
+            // }
+
+
+
             break;
         case A_Star_Manhattan:
-            long a = long(n.recess.find("1"));
+            long a = long(node.recess.find("1"));
             // if 1 is in a recess, we need to add 1
             // to compensate for the distance
-            if (a < n.recess.length())
+            if (a < node.recess.length())
                 return a + 1;
             else
-                return long(n.state.find("1"));
+                return long(node.state.find("1"));
             break;
     }
 }
