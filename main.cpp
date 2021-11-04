@@ -3,7 +3,7 @@
 // int main(int argc, char** argv) {
 int main () {
     Node InitialState;
-    string goal;
+    Node goal;
 
     // solves in 3 depth
     // InitialState.setState("--0-0--", "0123000");
@@ -15,7 +15,7 @@ int main () {
 
     // solves in 8 depth
     InitialState.setState("--0-0--", "4123000");
-    goal = "1234000";
+    goal.setState("--0-0--", "1234000");
 
     // solves in 1 depth
     // InitialState.setState("--0-0--", "0000001");

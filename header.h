@@ -70,6 +70,6 @@ class SmallerCost {
 };
 
 // the generic search function
-Node Search(Node initState, SearchType S, const string& goal);
+Node Search(Node initState, SearchType S, const Node& goalState);
 
 #endif /*HEADER_H*/

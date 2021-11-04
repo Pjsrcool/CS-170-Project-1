@@ -1,20 +1,32 @@
 #include "header.h"
 
 unordered_set<string> history;
+long misplaceTileHelper;
+Node goal;
 
 // check if the node is a goal state
-bool isGoalState(Node n, const string & goal) {
-    if (n.state[1].compare(goal) == 0)
+bool isGoalState(Node n) {
+    if (n.state[1].compare(goal.state[1]) == 0)
         return true;
     return false;
 }
 
 long heuristic (SearchType S, const Node& node) {
+    long h;
+
     switch(S) {
         case UniformCost: 
-            return 0; 
+            h = 0; 
             break;
         case A_Star_MisplacedTile:
+            // h = node.state[0].length() * 2;
+            h = 0;
+            for (int i = 0; i < goal.state[0].length(); ++i)
+                if (goal.state[0][i] != node.state[0][i] && node.state[0][0] != '0')
+                    h++;
+            for (int i = 0; i < goal.state[1].length(); ++i)
+                if (goal.state[1][i] != node.state[1][i] && node.state[1][i] != '0')
+                    h++;
 
             break;
         case A_Star_Manhattan:
@@ -22,12 +34,22 @@ long heuristic (SearchType S, const Node& node) {
             // if 1 is in a recess, we need to add 1
             // to compensate for the distance
             if (a < node.state[0].length())
-                return a + 1;
+                a = a + 1;
             else
-                return long(node.state[1].find("1"));
+                a = long(node.state[1].find("1"));
+
+            long b = long(node.state[0].find("2"));
+            // if 1 is in a recess, we need to add 1
+            // to compensate for the distance
+            if (b < node.state[0].length())
+                b = b;
+            else
+                b = long(node.state[1].find("2")) - 1;
+            
+            h = a+b;
             break;
     }
-    return 0;
+    return h;
 }
 
 void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
@@ -115,13 +137,17 @@ void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & chi
             }
 }
 
-Node Search(Node initState, SearchType search, const string& goal) {
+Node Search(Node initState, SearchType search, const Node& goalState) {
     priority_queue<Node, vector<Node>, SmallerCost> nodes;
     Node answer;
-
+    goal.setState(goalState.state[0], goalState.state[1]);
     // initialize the queue
     nodes.push(initState);
-    history.insert(initState.state[0] + initState.state[1]);
+    history.insert(initState.state[0] + initState.state[1] + to_string(initState.depth));
+
+    // where to begin searching for 0's in the 
+    // missing tile heuristic
+    misplaceTileHelper = goal.state[1].find('0');
 
     // initialize answer to all blanks
     // we return all blanks if no goal
@@ -137,7 +163,7 @@ Node Search(Node initState, SearchType search, const string& goal) {
         
         // check if it is the goal state
         // if it is, then return it
-        if (isGoalState(temp, goal)) {
+        if (isGoalState(temp)) {
             answer.setState(temp.state[0], temp.state[1]);
             answer.setDepth(temp.depth);
             answer.setCost(temp.cost);
