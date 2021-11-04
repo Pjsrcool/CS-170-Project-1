@@ -42,7 +42,7 @@ struct Node {
     long cost;
 
     // sets the recess and state configuration
-    void setState(string r, string s) {state.push_back(r); state.push_back(s);}
+    void setState(string r, string s) { state.clear(); state.push_back(r); state.push_back(s);}
 
     // sets the depth of the node
     void setDepth(long d) {depth = d;}

@@ -33,7 +33,7 @@ long heuristic (SearchType S, const Node& node) {
 void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
     Node temp;
     string r, s;
-    cout << i << j << endl;
+    // cout << i << j << endl;
     // if (history.insert(node.state[0] + node.state[1] + std::to_string(i) + std::to_string(j)).second ) {
         // move left
         if (j > 0 && node.state[i][j-1] == '0') {
@@ -118,11 +118,12 @@ Node Search(Node initState, SearchType search, const string& goal) {
 
     // initialize the queue
     nodes.push(initState);
+    history.insert(initState.state[0] + initState.state[1]);
 
     // initialize answer to all blanks
     // we return all blanks if no goal
     // state is found
-    answer.setState(" ", " ");
+    answer.setState("no solution", "no solution");
     answer.setCost(-1);
 
     while (!nodes.empty()) {

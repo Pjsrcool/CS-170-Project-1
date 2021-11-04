@@ -13,15 +13,15 @@ int main () {
     // InitialState.setState("--1-2--", "0003000");
     // goal = "1230000";
 
-    // 10?
+    // solves in 8 depth
     InitialState.setState("--0-0--", "4123000");
     goal = "1234000";
 
-    // 1
+    // solves in 1 depth
     // InitialState.setState("--0-0--", "0000001");
     // goal = "1000000";
 
-    // 28
+    // solves in 28 depth, currently 31
     // InitialState.setState("---0-0-0--", "0234567891");
     // goal = "1234567890";
 
