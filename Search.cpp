@@ -19,7 +19,6 @@ long heuristic (SearchType S, const Node& node) {
             h = 0; 
             break;
         case A_Star_MisplacedTile:
-            // h = node.state[0].length() * 2;
             h = 0;
             for (int i = 0; i < goal.state[0].length(); ++i)
                 if (goal.state[0][i] != node.state[0][i] && node.state[0][0] != '0')
@@ -38,15 +37,7 @@ long heuristic (SearchType S, const Node& node) {
             else
                 a = long(node.state[1].find("1"));
 
-            long b = long(node.state[0].find("2"));
-            // if 1 is in a recess, we need to add 1
-            // to compensate for the distance
-            if (b < node.state[0].length())
-                b = b;
-            else
-                b = long(node.state[1].find("2")) - 1;
-            
-            h = a+b;
+            h = a;
             break;
     }
     return h;
@@ -65,7 +56,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.state[i][j-1] = temp.state[i][j];
             temp.state[i][j] = '0';
             temp.setDepth(node.depth);
-            temp.setCost (temp.depth + heuristic(S, temp));
+            temp.setCost (node.cost + heuristic(S, temp));
             if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i, j-1, temp, children, S);
@@ -79,7 +70,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             r[j] = '0';
             temp.setState(r,s);
             temp.setDepth(node.depth);
-            temp.setCost (temp.depth + heuristic(S, temp));
+            temp.setCost (node.cost + heuristic(S, temp));
             if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i+1, j, temp, children, S);
@@ -93,7 +84,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             s[j] = '0';
             temp.setState(r,s);
             temp.setDepth(node.depth);
-            temp.setCost (temp.depth + heuristic(S, temp));
+            temp.setCost (node.cost + heuristic(S, temp));
             if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i-1, j, temp, children, S);
@@ -108,7 +99,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.state[i][j+1] = temp.state[i][j];
             temp.state[i][j] = '0';
             temp.setDepth(node.depth);
-            temp.setCost (temp.depth + heuristic(S, temp));
+            temp.setCost (node.cost + heuristic(S, temp));
             if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i, j+1, temp, children, S);
@@ -119,9 +110,6 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
 
 // expands a node and puts them into the queue
 void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
-    // for (int i = 0; i < node.state.size(); ++i)
-    //     for (int j = 0; j < node.state[i].length(); ++j)
-
     for (int i = node.state.size() - 1; i >= 0; --i)
         for (int j = node.state[i].size() - 1; j >= 0; --j)
             if (node.state[i][j] != '-' && node.state[i][j] != '0') {
@@ -132,7 +120,7 @@ void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & chi
                 s = node.state[1];
                 temp.setState(r,s);
                 temp.setDepth(node.depth + 1);
-                temp.setCost(node.cost);
+                temp.setCost(node.cost + 1);
                 ExpandNodeHelper(i, j, temp, children, S);
             }
 }

@@ -23,7 +23,7 @@ int main () {
 
     // solves in 28 depth, currently 31
     // InitialState.setState("---0-0-0--", "0234567891");
-    // goal = "1234567890";
+    // goal.setState("---0-0-0--", "1234567890");
 
     InitialState.setCost(0);
     InitialState.setDepth(0);
