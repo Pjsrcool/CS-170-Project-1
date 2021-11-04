@@ -5,16 +5,19 @@
 #include <iomanip>
 #include <queue>
 #include <vector>
+#include <queue>
 #include <string>
 #include <unordered_set>
 
 using std::vector;
+using std::queue;
 using std::priority_queue;
 using std::unordered_set;
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+using std::to_string;
 
 // we use an enum to decide which type of search to perform
 enum SearchType {
@@ -57,7 +60,8 @@ struct Node {
     }
 };
 
-// used to order the Node that enter the queue
+// used to order the Node that enter the queue, 
+// lowest cost on top of queue
 class SmallerCost {
     public:
     bool operator() (Node l, Node r) {

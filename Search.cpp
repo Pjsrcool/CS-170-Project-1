@@ -44,7 +44,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.state[i][j] = '0';
             temp.setDepth(node.depth);
             temp.setCost (temp.depth + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1]).second) {
+            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i, j-1, temp, children, S);
             }
@@ -58,7 +58,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.setState(r,s);
             temp.setDepth(node.depth);
             temp.setCost (temp.depth + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1]).second) {
+            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i+1, j, temp, children, S);
             }
@@ -72,7 +72,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.setState(r,s);
             temp.setDepth(node.depth);
             temp.setCost (temp.depth + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1]).second) {
+            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i-1, j, temp, children, S);
             }
@@ -87,7 +87,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
             temp.state[i][j] = '0';
             temp.setDepth(node.depth);
             temp.setCost (temp.depth + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1]).second) {
+            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
                 children.push(temp);
                 ExpandNodeHelper(i, j+1, temp, children, S);
             }
@@ -97,8 +97,11 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
 
 // expands a node and puts them into the queue
 void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
-    for (int i = 0; i < node.state.size(); ++i)
-        for (int j = 0; j < node.state[i].length(); ++j)
+    // for (int i = 0; i < node.state.size(); ++i)
+    //     for (int j = 0; j < node.state[i].length(); ++j)
+
+    for (int i = node.state.size() - 1; i >= 0; --i)
+        for (int j = node.state[i].size() - 1; j >= 0; --j)
             if (node.state[i][j] != '-' && node.state[i][j] != '0') {
                 // cout << i << j << endl;
                 Node temp;
