@@ -5,17 +5,25 @@ int main () {
     Node InitialState;
     string goal;
 
-    // InitialState.recess = "--0-0--";
-    // InitialState.state  = "0123000";
+    // solves in 3 depth
+    // InitialState.setState("--0-0--", "0123000");
     // goal = "1230000";
 
-    // InitialState.recess = "--1-2--";
-    // InitialState.state  = "0003000";
+    // solves in 4 depth
+    // InitialState.setState("--1-2--", "0003000");
     // goal = "1230000";
 
-    InitialState.recess = "---0-0-0--";
-    InitialState.state  = "0234567891";
-    goal = "1234567890";
+    // 10?
+    InitialState.setState("--0-0--", "4123000");
+    goal = "1234000";
+
+    // 1
+    // InitialState.setState("--0-0--", "0000001");
+    // goal = "1000000";
+
+    // 28
+    // InitialState.setState("---0-0-0--", "0234567891");
+    // goal = "1234567890";
 
     InitialState.setCost(0);
     InitialState.setDepth(0);

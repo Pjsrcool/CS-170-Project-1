@@ -4,7 +4,7 @@ unordered_set<string> history;
 
 // check if the node is a goal state
 bool isGoalState(Node n, const string & goal) {
-    if (n.state.compare(goal) == 0)
+    if (n.state[1].compare(goal) == 0)
         return true;
     return false;
 }
@@ -15,121 +15,101 @@ long heuristic (SearchType S, const Node& node) {
             return 0; 
             break;
         case A_Star_MisplacedTile:
-            // vector<int> openRecess;
-            // vector<int> openState;
-    
-            // // find the open spaces in recesses and the main path
-            // for (int i = 0; i < node.recess.length(); ++i) {
-            //     if (node.recess[i] == '0')
-            //         openRecess.push_back(i);
-            // }
-            // for (int i = 0; i < node.state.length(); ++i) {
-            //     if (node.state[i] == '0')
-            //         openState.push_back(i);
-            // }
-
-
 
             break;
         case A_Star_Manhattan:
-            long a = long(node.recess.find("1"));
+            long a = long(node.state[0].find("1"));
             // if 1 is in a recess, we need to add 1
             // to compensate for the distance
-            if (a < node.recess.length())
+            if (a < node.state[0].length())
                 return a + 1;
             else
-                return long(node.state.find("1"));
+                return long(node.state[1].find("1"));
             break;
     }
     return 0;
 }
 
-// expands a node and puts them into the queue
-void ExpandNode(const Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType S) {
-    vector<int> openRecess;
-    vector<int> openState;
-    
-    // find the open spaces in recesses and the main path
-    for (int i = 0; i < node.recess.length(); ++i) {
-        if (node.recess[i] == '0')
-            openRecess.push_back(i);
-    }
-    for (int i = 0; i < node.state.length(); ++i) {
-        if (node.state[i] == '0')
-            openState.push_back(i);
-    }
-    
-    // create new nodes
-    // spaces in recesses can only move down, so we only check 
-    // for moving the space down
-    for (int i = 0; i < openRecess.size(); ++i) {
-        if (node.state[openRecess[i]] != '0') {
-            Node temp;
-            temp.recess = node.recess;
-            temp.state = node.state;
-            temp.setDepth(node.depth + 1);
-            
-            // we change the node to the next state
-            temp.recess[openRecess[i]] = node.state[openRecess[i]];
-            temp.state[openRecess[i]] = '0';
-
-            temp.setCost(temp.depth + heuristic(S, temp));
-            
-            if  (history.insert(temp.recess + temp.state).second)
-                children.push(temp);
-        }
-    }
-    
-    // spaces in row can move left, right and up
-    for (int i = 0; i < openState.size(); ++i) {
+void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
+    Node temp;
+    string r, s;
+    cout << i << j << endl;
+    // if (history.insert(node.state[0] + node.state[1] + std::to_string(i) + std::to_string(j)).second ) {
         // move left
-        if (openState[i] > 0 && node.state[openState[i] - 1] != '0') {
-            Node temp;
-            temp.recess = node.recess;
-            temp.state = node.state;
-            temp.setDepth(node.depth + 1);
-
-            temp.state[openState[i]] = node.state[openState[i] - 1];
-            temp.state[openState[i] - 1] = '0';
-
-            temp.setCost(temp.depth + heuristic(S, temp));
-            
-            if  (history.insert(temp.recess + temp.state).second)
+        if (j > 0 && node.state[i][j-1] == '0') {
+            r = node.state[0];
+            s = node.state[1];
+            temp.setState(r,s);
+            temp.state[i][j-1] = temp.state[i][j];
+            temp.state[i][j] = '0';
+            temp.setDepth(node.depth);
+            temp.setCost (temp.depth + heuristic(S, temp));
+            if (history.insert(temp.state[0] + temp.state[1]).second) {
                 children.push(temp);
+                ExpandNodeHelper(i, j-1, temp, children, S);
+            }
+        }
+        // move down
+        if (i < node.state.size() - 1 && node.state[i+1][j] == '0') {
+            r = node.state[0];
+            s = node.state[1];
+            s[j] = r[j];
+            r[j] = '0';
+            temp.setState(r,s);
+            temp.setDepth(node.depth);
+            temp.setCost (temp.depth + heuristic(S, temp));
+            if (history.insert(temp.state[0] + temp.state[1]).second) {
+                children.push(temp);
+                ExpandNodeHelper(i+1, j, temp, children, S);
+            }
+        }
+        // move up
+        if (i > 0 && node.state[i-1][j] == '0') {
+            r = node.state[0];
+            s = node.state[1];
+            r[j] = s[j];
+            s[j] = '0';
+            temp.setState(r,s);
+            temp.setDepth(node.depth);
+            temp.setCost (temp.depth + heuristic(S, temp));
+            if (history.insert(temp.state[0] + temp.state[1]).second) {
+                children.push(temp);
+                ExpandNodeHelper(i-1, j, temp, children, S);
+            }
         }
         
         // move right
-        if (openState[i] < node.state.length() - 1 && node.state[openState[i] + 1] != '0') {
-            Node temp;
-            temp.recess = node.recess;
-            temp.state = node.state;
-            temp.setDepth(node.depth + 1);
-            
-            temp.state[openState[i]] = node.state[openState[i] + 1];
-            temp.state[openState[i] + 1] = '0';
-
-            temp.setCost(temp.depth + heuristic(S, temp));
-            
-            if  (history.insert(temp.recess + temp.state).second)
+        if (j < node.state[i].length() - 1 && node.state[i][j+1] == '0') {
+            r = node.state[0];
+            s = node.state[1];
+            temp.setState(r,s);
+            temp.state[i][j+1] = temp.state[i][j];
+            temp.state[i][j] = '0';
+            temp.setDepth(node.depth);
+            temp.setCost (temp.depth + heuristic(S, temp));
+            if (history.insert(temp.state[0] + temp.state[1]).second) {
                 children.push(temp);
+                ExpandNodeHelper(i, j+1, temp, children, S);
+            }
         }
-        
-        // move up
-        if (node.recess[openState[i]] != '-' && node.recess[openState[i]] != '0' ) {
-            Node temp;
-            temp.recess = node.recess;
-            temp.state = node.state;
-            temp.setDepth(node.depth + 1);
+    // }
+}
 
-            temp.state[openState[i]] = node.recess[openState[i]];
-            temp.recess[openState[i]] = '0';
-
-            temp.setCost(temp.depth + heuristic(S, temp));
-
-            if  (history.insert(temp.recess + temp.state).second)
-                children.push(temp);
-        }
-    }
+// expands a node and puts them into the queue
+void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
+    for (int i = 0; i < node.state.size(); ++i)
+        for (int j = 0; j < node.state[i].length(); ++j)
+            if (node.state[i][j] != '-' && node.state[i][j] != '0') {
+                // cout << i << j << endl;
+                Node temp;
+                string r, s;
+                r = node.state[0];
+                s = node.state[1];
+                temp.setState(r,s);
+                temp.setDepth(node.depth + 1);
+                temp.setCost(node.cost);
+                ExpandNodeHelper(i, j, temp, children, S);
+            }
 }
 
 Node Search(Node initState, SearchType search, const string& goal) {
@@ -146,16 +126,17 @@ Node Search(Node initState, SearchType search, const string& goal) {
     answer.setCost(-1);
 
     while (!nodes.empty()) {
+        cout << "node size: " << nodes.size() << endl;
         // we grab and print the top node
         Node temp = nodes.top();
         temp.print();
         
         // check if it is the goal state
         // if it is, then return it
-        if (isGoalState(nodes.top(), goal)) {
-            answer.setState(nodes.top().recess, nodes.top().state);
-            answer.setDepth(nodes.top().depth);
-            answer.setCost(nodes.top().cost);
+        if (isGoalState(temp, goal)) {
+            answer.setState(temp.state[0], temp.state[1]);
+            answer.setDepth(temp.depth);
+            answer.setCost(temp.cost);
             return answer;
         }
         // node was not a goal state. so we

@@ -25,13 +25,15 @@ enum SearchType {
 
 // how we will represent the node
 struct Node {
-    // recesses in the trench
-    // "-" --> blocked
-    // "0" --> space
-    string recess;  
+    // // recesses in the trench
+    // // "-" --> blocked
+    // // "0" --> space
+    // string recess;  
     
-    // men in the main portion of the trench
-    string state;   
+    // // men in the main portion of the trench
+    // string state;
+
+    vector<string> state; 
 
     // current depth of the node
     long depth; 
@@ -40,7 +42,7 @@ struct Node {
     long cost;
 
     // sets the recess and state configuration
-    void setState(string r, string s) {recess = r; state = s;}
+    void setState(string r, string s) {state.push_back(r); state.push_back(s);}
 
     // sets the depth of the node
     void setDepth(long d) {depth = d;}
@@ -50,8 +52,8 @@ struct Node {
 
     // prints the state of the node and its current depth
     void print() {
-        cout << recess << endl;
-        cout << state << " -->COST: " << cost << " -->Depth: " << depth << endl;
+        cout << state[0] << endl;
+        cout << state[1] << " -->COST: " << cost << " -->Depth: " << depth << endl;
     }
 };
 
