@@ -44,10 +44,10 @@ struct Node {
     vector<string> state; 
 
     // current depth of the node
-    long depth; 
+    int depth; 
     
     // prev cost + heuristic
-    long cost;
+    int cost;
 
     // sets the recess and state configuration
     void setState(string r, string s) { state.clear(); state.push_back(r); state.push_back(s);}

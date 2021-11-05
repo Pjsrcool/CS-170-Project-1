@@ -1,7 +1,7 @@
 #include "header.h"
 
 unordered_set<string> history;
-long misplaceTileHelper;
+int misplaceTileHelper;
 Node goal;
 
 // check if the node is a goal state
@@ -11,8 +11,8 @@ bool isGoalState(Node n) {
     return false;
 }
 
-long heuristic (SearchType S, const Node& node) {
-    long h;
+int heuristic (SearchType S, const Node& node) {
+    int h;
 
     switch(S) {
         case UniformCost: 
@@ -29,13 +29,13 @@ long heuristic (SearchType S, const Node& node) {
 
             break;
         case A_Star_Manhattan:
-            long a = long(node.state[0].find("1"));
+            int a = int(node.state[0].find("1"));
             // if 1 is in a recess, we need to add 1
             // to compensate for the distance
             if (a < node.state[0].length())
                 a = a + 1;
             else
-                a = long(node.state[1].find("1"));
+                a = int(node.state[1].find("1"));
 
             h = a;
             break;
