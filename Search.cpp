@@ -47,65 +47,66 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
     Node temp;
     string r, s;
     // cout << i << j << endl;
-    // if (history.insert(node.state[0] + node.state[1] + std::to_string(i) + std::to_string(j)).second ) {
-        // move left
-        if (j > 0 && node.state[i][j-1] == '0') {
-            r = node.state[0];
-            s = node.state[1];
-            temp.setState(r,s);
-            temp.state[i][j-1] = temp.state[i][j];
-            temp.state[i][j] = '0';
-            temp.setDepth(node.depth);
-            temp.setCost (node.cost + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
-                children.push(temp);
-                ExpandNodeHelper(i, j-1, temp, children, S);
-            }
+    // move left
+    if (j > 0 && node.state[i][j-1] == '0') {
+        r = node.state[0];
+        s = node.state[1];
+        temp.setState(r,s);
+        temp.state[i][j-1] = temp.state[i][j];
+        temp.state[i][j] = '0';
+        temp.setDepth(node.depth);
+        temp.setCost (node.cost + heuristic(S, temp));
+        if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
+            children.push(temp);
+            ExpandNodeHelper(i, j-1, temp, children, S);
         }
-        // move down
-        if (i < node.state.size() - 1 && node.state[i+1][j] == '0') {
-            r = node.state[0];
-            s = node.state[1];
-            s[j] = r[j];
-            r[j] = '0';
-            temp.setState(r,s);
-            temp.setDepth(node.depth);
-            temp.setCost (node.cost + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
-                children.push(temp);
-                ExpandNodeHelper(i+1, j, temp, children, S);
-            }
+    }
+    
+    // move up
+    if (i > 0 && node.state[i-1][j] == '0') {
+        r = node.state[0];
+        s = node.state[1];
+        r[j] = s[j];
+        s[j] = '0';
+        temp.setState(r,s);
+        temp.setDepth(node.depth);
+        temp.setCost (node.cost + heuristic(S, temp));
+        if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
+            children.push(temp);
+            ExpandNodeHelper(i-1, j, temp, children, S);
         }
-        // move up
-        if (i > 0 && node.state[i-1][j] == '0') {
-            r = node.state[0];
-            s = node.state[1];
-            r[j] = s[j];
-            s[j] = '0';
-            temp.setState(r,s);
-            temp.setDepth(node.depth);
-            temp.setCost (node.cost + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
-                children.push(temp);
-                ExpandNodeHelper(i-1, j, temp, children, S);
-            }
+    }
+    
+    // move right
+    if (j < node.state[i].length() - 1 && node.state[i][j+1] == '0') {
+        r = node.state[0];
+        s = node.state[1];
+        temp.setState(r,s);
+        temp.state[i][j+1] = temp.state[i][j];
+        temp.state[i][j] = '0';
+        temp.setDepth(node.depth);
+        temp.setCost (node.cost + heuristic(S, temp));
+        if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
+            children.push(temp);
+            ExpandNodeHelper(i, j+1, temp, children, S);
         }
-        
-        // move right
-        if (j < node.state[i].length() - 1 && node.state[i][j+1] == '0') {
-            r = node.state[0];
-            s = node.state[1];
-            temp.setState(r,s);
-            temp.state[i][j+1] = temp.state[i][j];
-            temp.state[i][j] = '0';
-            temp.setDepth(node.depth);
-            temp.setCost (node.cost + heuristic(S, temp));
-            if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
-                children.push(temp);
-                ExpandNodeHelper(i, j+1, temp, children, S);
-            }
+    }
+
+    // move down
+    if (i < node.state.size() - 1 && node.state[i+1][j] == '0') {
+        r = node.state[0];
+        s = node.state[1];
+        s[j] = r[j];
+        r[j] = '0';
+        temp.setState(r,s);
+        temp.setDepth(node.depth);
+        temp.setCost (node.cost + heuristic(S, temp));
+        if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
+            children.push(temp);
+            ExpandNodeHelper(i+1, j, temp, children, S);
         }
-    // }
+    }
+  
 }
 
 // expands a node and puts them into the queue

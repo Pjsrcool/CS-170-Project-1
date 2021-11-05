@@ -4,7 +4,7 @@
 int main () {
     Node InitialState;
     Node goal;
-
+    time_point<std::chrono::system_clock> start, end;
     // solves in 3 depth
     // InitialState.setState("--0-0--", "0123000");
     // goal = "1230000";
@@ -16,6 +16,10 @@ int main () {
     // solves in 8 depth
     InitialState.setState("--0-0--", "4123000");
     goal.setState("--0-0--", "1234000");
+
+    // solves in 11 depth
+    InitialState.setState("--0-0--", "2345100");
+    goal.setState("--0-0--", "1234500");
 
     // solves in 1 depth
     // InitialState.setState("--0-0--", "0000001");
@@ -42,6 +46,7 @@ int main () {
     } while (preferedSearch > 3  || preferedSearch < 1);
     preferedSearch--;
 
+    start = system_clock::now();
     switch (preferedSearch) {
         case UniformCost :
             answer = Search(InitialState, UniformCost, goal); 
@@ -53,10 +58,13 @@ int main () {
             answer = Search(InitialState, A_Star_Manhattan, goal);
             break;
     }
+    end = system_clock::now();
     
+    duration<double> runTime = end - start;
 
     cout << endl << "---FINAL ANSWER---" << endl;
     answer.print();
+    cout << "--> Run time: " << runTime.count() << " seconds" << endl;
 
     return 0;
 }

@@ -8,6 +8,8 @@
 #include <queue>
 #include <string>
 #include <unordered_set>
+#include <chrono>
+#include <ctime>
 
 using std::vector;
 using std::queue;
@@ -18,6 +20,9 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::to_string;
+using std::chrono::time_point;
+using std::chrono::system_clock;
+using std::chrono::duration;
 
 // we use an enum to decide which type of search to perform
 enum SearchType {
@@ -41,7 +46,7 @@ struct Node {
     // current depth of the node
     long depth; 
     
-    // depth + heuristic
+    // prev cost + heuristic
     long cost;
 
     // sets the recess and state configuration
