@@ -54,6 +54,7 @@ int heuristic (SearchType S, Node& node) {
     return h;
 }
 
+// maybe try bfs instead of dfs
 void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
     Node temp;
     string r, s;
