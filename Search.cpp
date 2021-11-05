@@ -11,7 +11,7 @@ bool isGoalState(Node n) {
     return false;
 }
 
-int heuristic (SearchType S, const Node& node) {
+int heuristic (SearchType S, Node& node) {
     int h;
 
     switch(S) {
@@ -20,26 +20,37 @@ int heuristic (SearchType S, const Node& node) {
             break;
         case A_Star_MisplacedTile:
             h = 0;
-            for (int i = 0; i < goal.state[0].length(); ++i)
-                if (node.state[0][0] != '0' && goal.state[0][i] != node.state[0][i])
+            for (int i = 0; i < node.state[0].length(); ++i)
+                if (node.state[0][i] != '0' && goal.state[0][i] != node.state[0][i])
+                // if (goal.state[0][i] != node.state[0][i])
                     h++;
-            for (int i = 0; i < goal.state[1].length(); ++i)
+
+            for (int i = 0; i < node.state[1].length(); ++i)
                 if (node.state[1][i] != '0' && goal.state[1][i] != node.state[1][i])
+                // if (goal.state[1][i] != node.state[1][i])
                     h++;
 
             break;
         case A_Star_Manhattan:
-            int a = int(node.state[0].find("1"));
-            // if 1 is in a recess, we need to add 1
-            // to compensate for the distance
-            if (a < node.state[0].length())
-                a = a + 1;
-            else
-                a = int(node.state[1].find("1"));
+            h = 0;
+            // for (int i = 0; i < node.state[0].length(); ++i)
+            //     if (node.state[0][i] != '0' && node.state[0][i] != '-')
+            //         h += abs((node.state[0][i] - 48) - (i + 1)) + 1;
 
-            h = a;
+            // for (int i = 0; i < node.state[1].length(); ++i)
+            //     if (node.state[1][i] != '0')
+            //         h += abs((node.state[1][i] - 48) - (i + 1));
+
+            int temp = node.state[0].find('1');
+            if (temp < node.state[0].length())
+                h = temp;
+            else
+                h = node.state[1].find('1');
+            
             break;
     }
+    // node.print();
+    // cout << "heuristic: " << h << endl;
     return h;
 }
 

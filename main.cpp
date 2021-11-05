@@ -5,9 +5,10 @@ int main () {
     Node InitialState;
     Node goal;
     time_point<std::chrono::system_clock> start, end;
+
     // solves in 3 depth
     // InitialState.setState("--0-0--", "0123000");
-    // goal = "1230000";
+    // goal.setState("--0-0--", "1230000");
 
     // solves in 4 depth
     // InitialState.setState("--1-2--", "0003000");
@@ -17,8 +18,20 @@ int main () {
     // InitialState.setState("--0-0--", "4123000");
     // goal.setState("--0-0--", "1234000");
 
+    // solves in 9 depth
+    // InitialState.setState("--0-0--", "4231000");
+    // goal.setState("--0-0--", "1234000");
+
+    // solves in 8
+    // InitialState.setState("--0-0--", "2341000");
+    // goal.setState("--0-0--", "1234000");
+
     // solves in 11 depth
     // InitialState.setState("--0-0--", "2345100");
+    // goal.setState("--0-0--", "1234500");
+
+    // solves in 10
+    // InitialState.setState("--0-0--", "2314500");
     // goal.setState("--0-0--", "1234500");
 
     // solves in 1 depth
@@ -26,12 +39,12 @@ int main () {
     // goal.setState("--0-0--", "1000000");
 
     // solves in 15 depth
-    InitialState.setState("---0-0-0--", "0234567001");
-    goal.setState("---0-0-0--", "1234567000");
+    // InitialState.setState("---0-0-0--", "0234567001");
+    // goal.setState("---0-0-0--", "1234567000");
 
     // solves in 28 depth
-    // InitialState.setState("---0-0-0--", "0234567891");
-    // goal.setState("---0-0-0--", "1234567890");
+    InitialState.setState("---0-0-0--", "0234567891");
+    goal.setState("---0-0-0--", "1234567890");
 
     InitialState.setCost(0);
     InitialState.setDepth(0);
