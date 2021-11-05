@@ -11,21 +11,25 @@ int main () {
 
     // solves in 4 depth
     // InitialState.setState("--1-2--", "0003000");
-    // goal = "1230000";
+    // goal.setState("--0-0--", "1230000");
 
     // solves in 8 depth
-    InitialState.setState("--0-0--", "4123000");
-    goal.setState("--0-0--", "1234000");
+    // InitialState.setState("--0-0--", "4123000");
+    // goal.setState("--0-0--", "1234000");
 
     // solves in 11 depth
-    InitialState.setState("--0-0--", "2345100");
-    goal.setState("--0-0--", "1234500");
+    // InitialState.setState("--0-0--", "2345100");
+    // goal.setState("--0-0--", "1234500");
 
     // solves in 1 depth
     // InitialState.setState("--0-0--", "0000001");
-    // goal = "1000000";
+    // goal.setState("--0-0--", "1000000");
 
-    // solves in 28 depth, currently 31
+    // solves in 15 depth
+    InitialState.setState("---0-0-0--", "0234567001");
+    goal.setState("---0-0-0--", "1234567000");
+
+    // solves in 28 depth
     // InitialState.setState("---0-0-0--", "0234567891");
     // goal.setState("---0-0-0--", "1234567890");
 
