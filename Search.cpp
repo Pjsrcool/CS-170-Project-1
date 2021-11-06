@@ -31,7 +31,7 @@ int heuristic (SearchType S, Node& node) {
                     h++;
 
             break;
-        case A_Star_Manhattan:
+        case A_Star_Manhattan: {
             h = 0;
             // for (int i = 0; i < node.state[0].length(); ++i)
             //     if (node.state[0][i] != '0' && node.state[0][i] != '-')
@@ -40,13 +40,23 @@ int heuristic (SearchType S, Node& node) {
             // for (int i = 0; i < node.state[1].length(); ++i)
             //     if (node.state[1][i] != '0')
             //         h += abs((node.state[1][i] - 48) - (i + 1));
-
+            
             int temp = node.state[0].find('1');
             if (temp < node.state[0].length())
-                h = temp;
+                h = temp + 1;
             else
                 h = node.state[1].find('1');
-            
+        }
+            break;
+        case Count_Obstructing_Men:
+            h = 0;
+            int sergeant = node.state[0].find('1');
+            if (sergeant >= node.state[0].length())
+                sergeant = node.state[1].find('1');
+
+            for (int i = 0; i < sergeant; ++i)
+                if (node.state[1][i] != '0')
+                    h++;
             break;
     }
     // node.print();

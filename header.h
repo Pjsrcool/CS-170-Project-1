@@ -30,6 +30,7 @@ enum SearchType {
     UniformCost,
     A_Star_MisplacedTile,
     A_Star_Manhattan,
+    Count_Obstructing_Men,
 };
 
 // how we will represent the node
