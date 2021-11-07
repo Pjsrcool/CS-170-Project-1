@@ -12,7 +12,7 @@
     // InitialState.setState("--1-2--", "0003000");
     // goal.setState("--0-0--", "1230000");
 
-    // solves in 8 depth (0,3,4)
+    // solves in 8 depth (0,1,3,4)
     // "--0-0--" "4123000" "--0-0--" "1234000"
     // InitialState.setState("--0-0--", "4123000");
     // goal.setState("--0-0--", "1234000");
@@ -32,7 +32,7 @@
     // InitialState.setState("--0-0--", "2341000");
     // goal.setState("--0-0--", "1234000");
 
-    // solves in 21 depth (0,3)
+    // solves in 20 depth (0,1,3,4)
     // "--0-0--" "0543210" "--0-0--" "1234500"
 
     // solves in 11 depth (0,1,3,4)
@@ -45,17 +45,17 @@
     // InitialState.setState("--0-0--", "2314500");
     // goal.setState("--0-0--", "1234500");
 
-    // solves in 10 depth (0,1)
+    // solves in 10 depth (0,1,3,4)
     // "---0-0--" "02314500" "---0-0--" "12345000"
     // InitialState.setState("---0-0--", "02314500");
     // goal.setState("---0-0--", "12345000");
 
-    // solves in 10 (0,4)
-    // "---0-0--" "23415000" "---0-0--" "12345000"
+    // solves in 10 (0,1,3,4)
+    // "---0-0--" "02314500" "---0-0--" "12345000"
     // InitialState.setState("---0-0--", "23415000");
     // goal.setState("---0-0--", "12345000");
 
-    // solves in 18 (0,1,2) (17 with 3,4?)
+    // solves in 18 (0,1,3,4)
     // "--0-0--" "5243100" "--0-0--" "1234500"
     // InitialState.setState("--0-0--", "5243100");
     // goal.setState("--0-0--", "1234500");
