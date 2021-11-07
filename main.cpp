@@ -18,13 +18,14 @@ int main(int argc, char** argv) {
     cout << "Welcome to 9 Men in a Trench solver\n";
     cout << "Select the your prefered search type:\n";
     cout << "1. Uniform Cost Search" << endl 
-         << "2. A* with Missing Tile Heuristic" << endl
-         << "3. A* with Manhattan Heuristic with 1" << endl
-         << "4. Count Obstructing Men Heuristic" << endl;
+         << "2. Misplaced Tiles Heuristic" << endl
+         << "3. Manhattan Heuristic with Sergeant" << endl
+         << "4. Count Obstructing Men Heuristic" << endl
+         << "5. Check Left Man of each man in correct place" << endl;
     
     do {
         cin >> preferedSearch;
-    } while (preferedSearch > 4  || preferedSearch < 1);
+    } while (preferedSearch > 5  || preferedSearch < 1);
     preferedSearch--;
 
     start = system_clock::now();
@@ -32,14 +33,17 @@ int main(int argc, char** argv) {
         case UniformCost :
             answer = Search(InitialState, UniformCost, goal); 
             break;
-        case A_Star_MisplacedTile : 
-            answer = Search(InitialState, A_Star_MisplacedTile, goal); 
+        case MisplacedTiles : 
+            answer = Search(InitialState, MisplacedTiles, goal); 
             break;
-        case A_Star_Manhattan :
-            answer = Search(InitialState, A_Star_Manhattan, goal);
+        case Manhattan_On_Sergeant :
+            answer = Search(InitialState, Manhattan_On_Sergeant, goal);
             break;
         case Count_Obstructing_Men :
             answer = Search(InitialState, Count_Obstructing_Men, goal);
+            break;
+        case Check_Left_Man :
+            answer = Search(InitialState, Check_Left_Man, goal);
             break;
     }
     end = system_clock::now();

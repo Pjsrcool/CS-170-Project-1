@@ -28,9 +28,10 @@ using std::stoi;
 // we use an enum to decide which type of search to perform
 enum SearchType {
     UniformCost,
-    A_Star_MisplacedTile,
-    A_Star_Manhattan,
+    MisplacedTiles,
+    Manhattan_On_Sergeant,
     Count_Obstructing_Men,
+    Check_Left_Man,
 };
 
 // how we will represent the node

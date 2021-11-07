@@ -18,45 +18,46 @@ int heuristic (SearchType S, Node& node) {
         case UniformCost: 
             h = 0; 
             break;
-        case A_Star_MisplacedTile:
+        case MisplacedTiles:
             h = 0;
             for (int i = 0; i < node.state[0].length(); ++i)
                 if (node.state[0][i] != '0' && goal.state[0][i] != node.state[0][i])
-                // if (goal.state[0][i] != node.state[0][i])
                     h++;
 
             for (int i = 0; i < node.state[1].length(); ++i)
                 if (node.state[1][i] != '0' && goal.state[1][i] != node.state[1][i])
-                // if (goal.state[1][i] != node.state[1][i])
                     h++;
 
             break;
-        case A_Star_Manhattan: {
-            h = 0;
-            // for (int i = 0; i < node.state[0].length(); ++i)
-            //     if (node.state[0][i] != '0' && node.state[0][i] != '-')
-            //         h += abs((node.state[0][i] - 48) - (i + 1)) + 1;
-
-            // for (int i = 0; i < node.state[1].length(); ++i)
-            //     if (node.state[1][i] != '0')
-            //         h += abs((node.state[1][i] - 48) - (i + 1));
-            
-            int temp = node.state[0].find('1');
-            if (temp < node.state[0].length())
-                h = temp + 1;
-            else
-                h = node.state[1].find('1');
-        }
+        case Manhattan_On_Sergeant: 
+            {
+                h = 0;
+                int temp = node.state[0].find('1');
+                if (temp < node.state[0].length())
+                    h = temp + 1;
+                else
+                    h = node.state[1].find('1');
+            }
             break;
-        case Count_Obstructing_Men:
-            h = 0;
-            int sergeant = node.state[0].find('1');
-            if (sergeant >= node.state[0].length())
-                sergeant = node.state[1].find('1');
+        case Count_Obstructing_Men: 
+            {
+                h = 0;
+                int sergeant = node.state[0].find('1');
+                if (sergeant >= node.state[0].length())
+                    sergeant = node.state[1].find('1');
 
-            for (int i = 0; i < sergeant; ++i)
-                if (node.state[1][i] != '0')
-                    h++;
+                for (int i = 0; i < sergeant; ++i)
+                    if (node.state[1][i] != '0')
+                        h++;
+            }
+            break;
+        case Check_Left_Man:
+            h = 0;
+            for (int i = 0; i < node.state.size(); ++i)
+                for (int j = 1; j < node.state[i].length(); ++j)
+                    if (node.state[i][j] != '-' && node.state[i][j] != '0' && 
+                        goal.state[i][j] == node.state[i][j] && node.state[i][j-1] != goal.state[i][j-1])
+                            h++;
             break;
     }
     // node.print();
@@ -126,7 +127,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
         temp.setState(r,s);
         temp.setDepth(node.depth);
         temp.setCost (node.depth + heuristic(S, temp));
-        temp.setCost (node.cost + heuristic(S, temp));
+        // temp.setCost (node.cost + heuristic(S, temp));
         if (history.insert(temp.state[0] + temp.state[1] + to_string(temp.depth)).second) {
             children.push(temp);
             ExpandNodeHelper(i+1, j, temp, children, S);
@@ -168,7 +169,7 @@ Node Search(Node initState, SearchType search, const Node& goalState) {
     // state is found
     answer.setState("no solution", "no solution");
     answer.setCost(-1);
-
+    
     while (!nodes.empty()) {
         cout << "node size: " << nodes.size() << endl;
         // we grab and print the top node
