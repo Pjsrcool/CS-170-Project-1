@@ -23,7 +23,6 @@ using std::to_string;
 using std::chrono::time_point;
 using std::chrono::system_clock;
 using std::chrono::duration;
-using std::stoi;
 
 // we use an enum to decide which type of search to perform
 enum SearchType {
