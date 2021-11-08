@@ -5,6 +5,8 @@ unordered_set<string> movement; // prevents circular movement when expanding a n
 Node goal;  // the goal state of the solution
             // we make it global to reduce overhead
 
+long nodesExpanded = 0;
+
 // function to check if the node is a goal state
 bool isGoalState(Node n) {
     if (n.state[1].compare(goal.state[1]) == 0)
@@ -151,6 +153,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
 
 // function that expands a node and puts them into the queue
 void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
+        nodesExpanded++;
         for (int i = node.state.size() - 1; i >= 0; --i)
             for (int j = node.state[i].size() - 1; j >= 0; --j)
                 if (node.state[i][j] != '-' && node.state[i][j] != '0') {
@@ -195,6 +198,9 @@ Node Search(Node initState, SearchType search, const Node& goalState) {
             answer.setState(temp.state[0], temp.state[1]);
             answer.setDepth(temp.depth);
             answer.setCost(temp.cost);
+
+            cout << endl << "nodes expanded: " << nodesExpanded << endl;
+
             return answer;
         }
 
@@ -209,5 +215,7 @@ Node Search(Node initState, SearchType search, const Node& goalState) {
     }
 
     // we return our results
+    cout << "nodes expanded: " << nodesExpanded << endl;
+    cout << "faoweiuhfap;wioefh;awiefa;wieofha;weif" << endl;
     return answer;
 }
