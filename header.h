@@ -34,16 +34,15 @@ enum SearchType {
     Check_Left_Man,
 };
 
-// how we will represent the node
+// this is how we will represent the node
 struct Node {
-    // // recesses in the trench
-    // // "-" --> blocked
-    // // "0" --> space
-    // string recess;  
-    
-    // // men in the main portion of the trench
-    // string state;
-
+    // this is the current configuration of the board
+    // in this program, we will limit the board to 2 row
+    // state[0] will be the row with recesses
+    // state[1] will be either empty space, or men
+    // '-' --> inaccessable
+    // '0' --> empty space
+    // any int --> man
     vector<string> state; 
 
     // current depth of the node
@@ -52,14 +51,22 @@ struct Node {
     // prev cost + heuristic
     int cost;
 
-    // sets the recess and state configuration
-    void setState(string r, string s) { state.clear(); state.push_back(r); state.push_back(s);}
+    // sets the configuration of the recess row and state row
+    void setState(string r, string s) { 
+        state.clear();
+        state.push_back(r);
+        state.push_back(s);
+    }
 
     // sets the depth of the node
-    void setDepth(long d) {depth = d;}
+    void setDepth(long d) {
+        depth = d;
+    }
 
     // sets the depth of the node
-    void setCost(long c) {cost = c;}
+    void setCost(long c) {
+        cost = c;
+    }
 
     // prints the state of the node and its current depth
     void print() {
@@ -68,7 +75,8 @@ struct Node {
     }
 };
 
-// used to order the Node that enter the queue, 
+// Comparison object used to order 
+// Nodes that enter the queue, 
 // lowest cost on top of queue
 class SmallerCost {
     public:
