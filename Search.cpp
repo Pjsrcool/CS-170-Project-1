@@ -151,6 +151,7 @@ void ExpandNodeHelper(const int i, const int j, Node node, priority_queue<Node, 
   
 }
 
+// candidate for multithread
 // function that expands a node and puts them into the queue
 void ExpandNode(Node node, priority_queue<Node, vector<Node>, SmallerCost> & children, SearchType & S) {
         nodesExpanded++;
